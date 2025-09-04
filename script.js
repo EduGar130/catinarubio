@@ -211,34 +211,6 @@ function safeQuerySelector(selector) {
 
 // Accessibility improvements
 function improveAccessibility() {
-  // Add skip link for keyboard users
-  const skipLink = document.createElement("a")
-  skipLink.href = "#hero"
-  skipLink.textContent = "Saltar al contenido principal"
-  skipLink.className = "skip-link"
-  skipLink.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        background: var(--text);
-        color: var(--bg);
-        padding: 8px;
-        text-decoration: none;
-        border-radius: 4px;
-        z-index: 1001;
-        transition: top 0.3s;
-    `
-
-  skipLink.addEventListener("focus", function () {
-    this.style.top = "6px"
-  })
-
-  skipLink.addEventListener("blur", function () {
-    this.style.top = "-40px"
-  })
-
-  document.body.insertBefore(skipLink, document.body.firstChild)
-
   // Improve button accessibility
   const buttons = document.querySelectorAll("button")
   buttons.forEach((button) => {

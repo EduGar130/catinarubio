@@ -1,14 +1,16 @@
 /* CSS Variables */
 :root {
   --nav-h: 80px;
-  --bg: #faf7f5;
-  --text: #1f1f1f;
-  --muted: #6b6b6b;
-  --rose: #f6d6d6;
-  --lilac: #e7d8ff;
-  --mint: #ddf3e4;
-  --sky: #dcebff;
-  --gold: #ebd9a6;
+  --bg: #fbf9f8; /* very light warm background, kept soft */
+  --text: #0f1720; /* darker text for improved contrast */
+  --muted: #4a5458; /* stronger muted color */
+  --rose: #f2cfcf; /* slightly deeper rose */
+  --lilac: #cdb3ff; /* richer lilac for better contrast */
+  --lilac-dark: #a891ff; /* darker lilac for hovers and accents */
+  --mint: #bfe9d6; /* deeper mint for contrast */
+  --mint-dark: #8fd8ad;
+  --sky: #cfe7ff; /* slightly deeper sky */
+  --gold: #e0c77a;
   --white: #ffffff;
   --shadow: rgba(0, 0, 0, 0.1);
   --shadow-hover: rgba(0, 0, 0, 0.15);
@@ -273,13 +275,14 @@ p {
 
 .btn-primary {
   background: var(--lilac);
-  color: var(--text);
+  color: var(--white);
 }
 
 .btn-primary:hover {
   background: var(--sky);
+  background: var(--lilac-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(231, 216, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(105, 85, 255, 0.15);
 }
 
 .btn-secondary {
@@ -289,8 +292,9 @@ p {
 
 .btn-secondary:hover {
   background: var(--gold);
+  background: var(--mint-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(221, 243, 228, 0.4);
+  box-shadow: 0 10px 30px rgba(34, 139, 98, 0.08);
 }
 
 .btn-outline {
@@ -332,7 +336,7 @@ p {
 
 .hero-title {
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--text) 0%, var(--lilac) 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--lilac-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -540,7 +544,7 @@ p {
   padding: 1.5rem;
   border-radius: 15px;
   margin-bottom: 1rem;
-  border-left: 4px solid var(--lilac);
+  border-left: 4px solid var(--lilac-dark);
   box-shadow: 0 8px 25px var(--shadow);
 }
 
@@ -580,7 +584,7 @@ p {
 
 /* Footer */
 .footer {
-  background: var(--text);
+  background: #0b0f13;
   color: var(--bg);
   padding: 3rem 0;
 }
@@ -739,8 +743,9 @@ p {
 .nav-link:focus,
 .btn:focus,
 .social-link:focus {
-  outline: 2px solid var(--lilac);
-  outline-offset: 2px;
+  outline: 3px solid var(--lilac-dark);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(168, 147, 255, 0.12);
 }
 
 /* High Contrast Mode Support */
