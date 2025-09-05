@@ -153,6 +153,52 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("mousedown", () => {
     document.body.classList.remove("keyboard-navigation")
   })
+
+  // Mobile hamburger menu behavior
+  const navToggle = document.querySelector('.nav-toggle')
+  const navMenu = document.querySelector('.nav-menu')
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', (e) => {
+      const isOpen = navMenu.classList.toggle('mobile-open')
+      navToggle.setAttribute('aria-expanded', isOpen)
+      // update aria-label for clarity
+      navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú')
+      // prevent body scroll when open
+      document.body.style.overflow = isOpen ? 'hidden' : ''
+    })
+
+    // Close when clicking a link inside the mobile menu
+    navMenu.addEventListener('click', (e) => {
+      const target = e.target
+      if (target.closest('a[href^="#"]')) {
+        navMenu.classList.remove('mobile-open')
+        navToggle.setAttribute('aria-expanded', 'false')
+  navToggle.setAttribute('aria-label', 'Abrir menú')
+  document.body.style.overflow = ''
+      }
+    })
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('mobile-open')) {
+        navMenu.classList.remove('mobile-open')
+        navToggle.setAttribute('aria-expanded', 'false')
+        navToggle.setAttribute('aria-label', 'Abrir menú')
+        document.body.style.overflow = ''
+      }
+    })
+
+    // Close when clicking outside the menu
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('mobile-open')) {
+        navMenu.classList.remove('mobile-open')
+        navToggle.setAttribute('aria-expanded', 'false')
+        navToggle.setAttribute('aria-label', 'Abrir menú')
+        document.body.style.overflow = ''
+      }
+    })
+  }
 })
 
 // Sample toggle functionality

@@ -144,6 +144,19 @@ p {
   gap: 2rem;
 }
 
+/* Hamburger toggle (mobile) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.nav-toggle svg {
+  display: block;
+}
+
 .nav-link {
   color: var(--text);
   text-decoration: none;
@@ -672,6 +685,37 @@ p {
 
   .nav-menu {
     gap: 1rem;
+  }
+
+  /* show hamburger */
+  .nav-toggle {
+    display: block;
+  }
+
+  /* mobile: hide regular menu and use panel */
+  .nav-menu {
+    position: fixed;
+    top: var(--nav-h);
+    right: 0;
+    width: 85vw;
+    max-width: 360px;
+    height: calc(100vh - var(--nav-h));
+    background: var(--white);
+    transform: translateX(110%);
+    transition: transform 0.28s ease;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  gap: 1rem;
+  display: flex; /* ensure visible but off-canvas */
+  }
+
+  .nav-menu a, .nav-menu .nav-dropdown, .nav-menu .social-icons {
+    width: 100%;
+  }
+
+  .nav-menu.mobile-open {
+    transform: translateX(0%);
   }
 
   .social-icons {
