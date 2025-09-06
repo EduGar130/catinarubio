@@ -5,14 +5,14 @@
   --text: #0f1720; /* darker text for improved contrast */
   --muted: #4a5458; /* stronger muted color */
   --rose: #f2cfcf; /* slightly deeper rose */
-  --lilac: #cdb3ff; /* richer lilac for better contrast */
-  --lilac-dark: #a891ff; /* darker lilac for hovers and accents */
+  --lilac: hsl(261, 88%, 61%); /* richer lilac for better contrast */
+  --lilac-dark: #7e5bff; /* darker lilac for hovers and accents */
   --mint: #bfe9d6; /* deeper mint for contrast */
   --mint-dark: #8fd8ad;
   --sky: #cfe7ff; /* slightly deeper sky */
   --gold: #e0c77a;
   --white: #ffffff;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow: rgba(0, 0, 0, 0.5);
   --shadow-hover: rgba(0, 0, 0, 0.15);
 
   /* Typography */
@@ -192,10 +192,11 @@ p {
 }
 
 .nav-dropdown-btn {
+  font-family: var(--font-body);
+  font-size: 18px;
   background: none;
   border: none;
   color: var(--text);
-  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -205,6 +206,12 @@ p {
 
 .nav-dropdown-btn:hover {
   color: var(--lilac);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px !important;
+  fill: currentColor;
 }
 
 .nav-dropdown-content {
@@ -317,19 +324,30 @@ p {
 
 .btn-outline:hover {
   background: var(--lilac);
-  color: var(--text);
+  color: #fff;
   transform: translateY(-2px);
 }
 
 /* Hero Section */
-.hero {
-  min-height: 100vh;
+.hero-media {
+  /* fill the hero-decoration area vertically so the image can match section height */
+  height: 100%;
+  width: 100%;
   display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, var(--bg) 0%, var(--sky) 100%);
-  position: relative;
-  overflow: hidden;
-  padding-top: var(--nav-h);
+  align-items: flex-end; /* align image base to bottom of hero area */
+  justify-content: center;
+  pointer-events: none; /* decorative */
+}
+.hero-image {
+  display: block;
+  /* make image fill the hero height (not cropped) and keep whole image visible */
+  height: 100%;
+  width: auto;
+  max-width: none;
+  pointer-events: none;
+  object-fit: contain; /* show entire image within its container */
+  object-position: center bottom; /* keep base visible */
+  z-index: 1;
 }
 
 .hero-content {
@@ -341,6 +359,7 @@ p {
   gap: 4rem;
   align-items: center;
   width: 100%;
+  min-height: 100dvh;
 }
 
 .hero-text {
@@ -356,66 +375,110 @@ p {
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--muted);
   margin-bottom: 2.5rem;
-  line-height: 1.6;
+  line-height: 1.2;
 }
 
 .hero-buttons {
   display: flex;
   gap: 1.5rem;
-  flex-wrap: wrap;
 }
 
 /* Floating Elements */
 .hero-decoration {
-  position: relative;
-  width: 300px;
-  height: 300px;
+  /* place decoration area at the right side of the hero and align its contents to the bottom
+     ensure it starts below the fixed navbar so the top of the image is not hidden */
+  position: absolute;
+  left: 60%;
+  top: var(--nav-h);
+  bottom: 0;
+  height: auto;
+  width: auto; /* let the decoration size itself to the image to avoid big empty gaps */
+  display: flex;
+  align-items: flex-end; /* align children to the base */
+  justify-content: center;
+  overflow: visible;
+  padding-right: 1.5rem;
+  z-index: 10;
 }
 
 .floating-element {
+  transition: opacity 500ms ease;
   position: absolute;
   border-radius: 50%;
-  opacity: 0.6;
-  animation: float 6s ease-in-out infinite;
+  opacity: 0.8;
+  animation: float 8s ease-in-out infinite;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1),
+              box-shadow 300ms ease,
+              opacity 200ms ease,
 }
 
 .floating-element:nth-child(1) {
-  width: 80px;
-  height: 80px;
-  background: var(--rose);
+  width: 160px;
+  height: 160px;
+  /* degradado */
+  background: linear-gradient(135deg, var(--lilac) 0%, var(--mint) 100%);
   top: 20%;
-  left: 10%;
+  left: 50%;
   animation-delay: 0s;
 }
 
 .floating-element:nth-child(2) {
-  width: 60px;
-  height: 60px;
-  background: var(--mint);
-  top: 60%;
-  right: 20%;
+  width: 200px;
+  height: 200px;
+  /* degradado */
+  background: linear-gradient(135deg, var(--mint) 0%, var(--gold) 100%);
+  top: 40%;
+  right: 80%;
   animation-delay: 2s;
 }
 
 .floating-element:nth-child(3) {
-  width: 100px;
-  height: 100px;
-  background: var(--gold);
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--sky) 100%);
   bottom: 20%;
-  left: 50%;
+  left: 70%;
   animation-delay: 4s;
 }
 
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px) rotate(0deg) scale(1);
   }
   50% {
-    transform: translateY(-20px) rotate(180deg);
+    transform: translateY(-40px) rotate(180deg) scale(1.1);
+  }
+}
+
+/* Hover effect for floating bubbles: subtle pop + glow and pause float animation */
+.floating-element:hover,
+.floating-element:focus {
+  opacity: 0.15;
+  animation-play-state: paused;
+}
+
+/* Keyboard accessibility: allow focus with outline */
+.floating-element:focus {
+  outline: 3px solid rgba(126,91,255,0.18);
+  outline-offset: 6px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating-element {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+  .floating-element:hover {
+    transform: none;
+    box-shadow: none;
+    filter: none;
+    animation-play-state: paused;
   }
 }
 
@@ -423,7 +486,7 @@ p {
 .about {
   min-height: calc(100vh - var(--nav-h));
   padding: var(--section-padding);
-  background: var(--white);
+  background: var(--sky);
 }
 
 .about-content {
@@ -488,6 +551,9 @@ p {
 .book-section {
   padding: var(--section-padding);
   position: relative;
+  min-height: 100dvh;
+    display: flex;
+    align-items: center;
 }
 
 .luna-section {
@@ -496,6 +562,49 @@ p {
 
 .terciopelo-section {
   background: linear-gradient(135deg, var(--rose) 0%, var(--bg) 100%);
+}
+
+
+/* Forthcoming book teaser */
+.forthcoming-section {
+  background: linear-gradient(180deg, rgba(190, 230, 220, 0.18) 0%, var(--white) 100%);
+  padding: 3.5rem 0;
+}
+
+.book-content.teaser {
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  gap: 3rem;
+}
+
+.forthcoming-section .lead {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.forthcoming-section .muted {
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.cover-placeholder {
+  width: 100%;
+  max-width: 320px;
+  height: 420px;
+  background: linear-gradient(135deg, var(--lilac) 0%, var(--mint) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 20px 40px var(--shadow);
+}
+
+.forthcoming-section .book-actions {
+  margin-top: 1.25rem;
 }
 
 .book-content {
@@ -521,7 +630,7 @@ p {
   width: 100%;
   max-width: 350px;
   height: auto;
-  border-radius: 15px;
+  border-radius: 2px;
   box-shadow: 0 25px 50px var(--shadow);
   transition: transform 0.3s ease;
 }
@@ -654,13 +763,11 @@ p {
 
   .about-content {
     grid-template-columns: 1fr;
-    text-align: center;
   }
 
   .book-content,
   .book-content.reverse {
     grid-template-columns: 1fr;
-    text-align: center;
   }
 
   .book-content.reverse .book-cover,
@@ -781,15 +888,6 @@ p {
     flex-direction: column;
     align-items: center;
   }
-}
-
-/* Focus States for Accessibility */
-.nav-link:focus,
-.btn:focus,
-.social-link:focus {
-  outline: 3px solid var(--lilac-dark);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgba(168, 147, 255, 0.12);
 }
 
 /* High Contrast Mode Support */
