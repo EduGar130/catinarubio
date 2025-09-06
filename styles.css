@@ -852,6 +852,10 @@ p {
     --nav-h: 60px;
   }
 
+  .cover-placeholder {
+    display: none;
+  }
+
   body {
     font-size: 16px;
   }
