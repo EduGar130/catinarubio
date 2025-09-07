@@ -35,6 +35,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* Prevent mobile browsers from automatically enlarging text (accessibility/UA zoom) */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -44,6 +48,10 @@ body {
   color: var(--text);
   background-color: var(--bg);
   overflow-x: hidden;
+  /* Also apply text-size-adjust on body as a fallback */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Reduced Motion */
@@ -758,13 +766,14 @@ p {
   }
 
   .hero {
-    min-height: 140dvh;
+    min-height: 160dvh;
   }
 
   .hero-decoration {
-    max-height: 100dvh;
-    left: 15%;
-    top: calc(var(--nav-h) + 72dvh);
+    height: 70dvh;
+    left: 50vw;
+    transform: translateX(-46%);
+    top: calc(var(--nav-h) + 90dvh);
   }
 
   .floating-element {
