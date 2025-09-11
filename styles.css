@@ -47,7 +47,7 @@ body {
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 1.6;
-  color: var(--text);
+  border: 2px solid transparent; /* same box model as .btn */
   background-color: var(--bg);
   overflow-x: hidden;
   /* Also apply text-size-adjust on body as a fallback */
@@ -412,6 +412,108 @@ p {
   overflow: visible;
   padding-right: 1.5rem;
   z-index: 10;
+}
+
+/* Compact stores dropdown used in book action areas */
+.stores-dropdown {
+  display: inline-block;
+  margin-right: 1rem;
+  vertical-align: middle;
+  position: relative;
+}
+.stores-dropdown summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  /* Match .btn sizing */
+  padding: 1.3rem 2rem;
+  border-radius: 50px;
+  background: linear-gradient(90deg, var(--lilac) 0%, var(--lilac-dark) 100%);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  border: none;
+  box-shadow: 0 8px 28px rgba(126,91,255,0.12), 0 2px 6px rgba(0,0,0,0.06);
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms ease, filter 200ms ease;
+}
+.stores-dropdown summary::-webkit-details-marker { display: none; }
+.stores-dropdown .store-links {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.6rem;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(17,24,39,0.12);
+  transform: translateY(-6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 200ms ease;
+  z-index: 40;
+  flex-wrap: nowrap; /* force horizontal */
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.stores-dropdown .store-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.95rem; /* a bit larger for clickable area */
+  border-radius: 10px;
+  background: rgba(126,91,255,0.05);
+  text-decoration: none;
+  color: var(--lilac-dark);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+  white-space: nowrap;
+}
+
+/* Open state animation */
+.stores-dropdown[open] .store-links {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hover and press interactions for summary */
+.stores-dropdown summary:hover {
+  transform: translateY(-3px) scale(1.01);
+  filter: saturate(1.05);
+}
+.stores-dropdown summary:active {
+  transform: translateY(0) scale(0.99);
+}
+.stores-dropdown summary:focus {
+  outline: 3px solid rgba(126,91,255,0.14);
+  outline-offset: 4px;
+}
+
+/* Hover/active for individual store links */
+.stores-dropdown .store-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(126,91,255,0.08);
+  background: linear-gradient(90deg, rgba(126,91,255,0.08) 0%, rgba(126,91,255,0.06) 100%);
+  color: var(--lilac-dark);
+}
+.stores-dropdown .store-link:active {
+  transform: translateY(0) scale(0.985);
+}
+.stores-dropdown .store-link:focus {
+  outline: 3px solid rgba(126,91,255,0.12);
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .stores-dropdown summary { padding: 1rem 2rem; font-size: 1rem; }
+  /* In mobile, show store links inline below and allow horizontal scroll */
+  .stores-dropdown .store-links { gap: 0.5rem; position: static; transform: none; opacity: 1; pointer-events: auto; box-shadow: none; background: transparent; padding: 0; overflow-x: auto; }
+  .stores-dropdown .store-link { font-size: 0.92rem; padding: 0.5rem 0.7rem; background: rgba(126,91,255,0.04); }
 }
 
 .floating-element {
