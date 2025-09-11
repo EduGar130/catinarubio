@@ -510,10 +510,12 @@ p {
 }
 
 @media (max-width: 640px) {
-  .stores-dropdown summary { padding: 1rem 2rem; font-size: 1rem; }
-  /* In mobile, show store links inline below and allow horizontal scroll */
-  .stores-dropdown .store-links { gap: 0.5rem; position: static; transform: none; opacity: 1; pointer-events: auto; box-shadow: none; background: transparent; padding: 0; overflow-x: auto; }
-  .stores-dropdown .store-link { font-size: 0.92rem; padding: 0.5rem 0.7rem; background: rgba(126,91,255,0.04); }
+  .stores-dropdown summary { padding: 1rem 2rem; font-size: 1rem; width: 100%; display: block; }
+  /* In mobile, stack book actions and make controls full width */
+  .book-actions { flex-direction: column; align-items: stretch; }
+  .book-actions .btn { width: 100%; }
+  .stores-dropdown .store-links { gap: 0.5rem; position: static; transform: none; opacity: 1; pointer-events: auto; box-shadow: none; background: transparent; padding: 0; overflow-x: visible; display: flex; flex-direction: column; }
+  .stores-dropdown .store-link { font-size: 0.92rem; padding: 0.7rem 0.9rem; background: rgba(126,91,255,0.04); width: 100%; display: block; text-align: center; }
 }
 
 .floating-element {
