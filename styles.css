@@ -872,14 +872,14 @@ p {
   }
 
   .hero {
-    min-height: 160dvh;
+    min-height: 160lvh;
   }
 
   .hero-decoration {
-    height: 70dvh;
+    height: 70lvh;
     left: 50vw;
     transform: translateX(-46%);
-    top: calc(var(--nav-h) + 90dvh);
+    top: calc(var(--nav-h) + 90lvh);
   }
 
   .floating-element {
