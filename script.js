@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // Sample toggle functionality
-function toggleSample(bookId) {
+function toggleSample(bookId, event) {
   const sampleElement = document.getElementById(`${bookId}-sample`)
   const button = event.target
 
